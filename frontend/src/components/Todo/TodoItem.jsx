@@ -52,7 +52,7 @@ export const TodoItem = ({
       exit={{ opacity: 0, y: 20 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
-      {!isChecked && (
+      {(!isChecked && !isEditing) && (
         <div className={styles.leftBtns}>
           <MdKeyboardArrowUp size="40px" />
           <MdKeyboardArrowDown size="40px" />
