@@ -1,11 +1,6 @@
 import { useState, useEffect } from "react";
 
-import {
-  get_todos,
-  create_todo,
-  delete_todo,
-  update_todo,
-} from "./api/endpoints";
+import { get_todos, create_todo, delete_todo } from "./api/endpoints";
 
 import styles from "./styles/App.module.css";
 
@@ -34,13 +29,15 @@ function App() {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
-  const updateTodos = (id, editedText) => {
-    setTodos(
-      todos.map((t) => {
-        if (t.id === id) return { ...t, todo_name: editedText };
+  const updateTodos = (id, editedText, completed) => {
+    setTodos((prevTodos) => {
+      const updatedTodos = prevTodos.map((t) => {
+        if (t.id === id) return { ...t, todo_name: editedText, completed };
         else return t;
-      }),
-    );
+      });
+
+      return updatedTodos.sort((a, b) => a.completed - b.completed);
+    });
   };
 
   return (

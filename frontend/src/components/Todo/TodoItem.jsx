@@ -24,6 +24,7 @@ export const TodoItem = ({
   };
   const handleComplete = async () => {
     await update_todo(id, todo_name, !isChecked);
+    updateTodos(id, todo_name, !isChecked);
     setChecked(!isChecked);
   };
   const handleEdit = () => {
@@ -36,7 +37,7 @@ export const TodoItem = ({
     e.preventDefault();
     if (editedText.trim() !== "" && editedText !== todo_name) {
       await update_todo(id, editedText, completed);
-      updateTodos(id, editedText);
+      updateTodos(id, editedText, completed);
     }
     toggleEditing(false);
   };
