@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import { LiaEdit } from "react-icons/lia";
 import { IoTrash } from "react-icons/io5";
+import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { update_todo } from "../../api/endpoints";
@@ -51,17 +52,12 @@ export const TodoItem = ({
       exit={{ opacity: 0, y: 20 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
-      {/* <div className={styles.checkboxWrapper}> */}
-      {/*   <input */}
-      {/*     id={`checkbox-${id}`} */}
-      {/*     type="checkbox" */}
-      {/*     checked={isChecked} */}
-      {/*     onChange={handleComplete} */}
-      {/*   /> */}
-      {/*   <label htmlFor={`checkbox-${id}`}> */}
-      {/*     <div className={styles.tickMark}></div> */}
-      {/*   </label> */}
-      {/* </div> */}
+      {!isChecked && (
+        <div className={styles.leftBtns}>
+          <MdKeyboardArrowUp size="40px" />
+          <MdKeyboardArrowDown size="40px" />
+        </div>
+      )}
       <div className={styles.content}>
         {isEditing ? (
           <form onSubmit={handleSave} className={styles.formWrapper}>
@@ -107,8 +103,8 @@ export const TodoItem = ({
         )}
       </div>
 
-      <div className={styles.buttonWrapper}>
-        <LiaEdit size="45px" onClick={handleEdit} />
+      <div className={styles.rightBtns}>
+        {!isChecked && <LiaEdit size="45px" onClick={handleEdit} />}
         <IoTrash size="40px" onClick={handleDelete} />
       </div>
     </motion.div>
