@@ -4,10 +4,13 @@ import styles from "../../styles/AddTodo.module.css";
 
 export const AddTodo = ({ addTodo }) => {
   const [input, setInput] = useState("");
+  const [index, setIndex] = useState(0);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (input.trim() !== "") {
-      addTodo(input);
+      addTodo(input, index);
+      setIndex(index + 1);
       setInput("");
     }
   };

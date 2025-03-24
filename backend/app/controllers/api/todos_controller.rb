@@ -1,12 +1,11 @@
 class Api::TodosController < ApplicationController
   before_action :set_todo, only: %i[ show update destroy ]
 
-  # GET /todos
-  def index
-    @todos = Todo.order(:index)
-
-    render json: @todos
-  end
+# GET /todos
+def index
+  @todos = Todo.order(position: :desc)
+  render json: @todos
+end
 
   # GET /todos/1
   def show
@@ -46,6 +45,6 @@ class Api::TodosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def todo_params
-      params.expect(todo: [ :todo_name, :completed, :index ])
+      params.expect(todo: [ :todo_name, :completed, :position ])
     end
 end

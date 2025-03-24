@@ -1,3 +1,3 @@
 class Todo < ApplicationRecord
-  default_scope { order(index: :asc) }
+  default_scope { order(position: :desc) }
 end

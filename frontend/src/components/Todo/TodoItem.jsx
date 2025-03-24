@@ -12,6 +12,7 @@ import styles from "../../styles/TodoItem.module.css";
 export const TodoItem = ({
   todo_name,
   id,
+  index,
   deleteTodo,
   completed,
   updateTodos,
@@ -23,17 +24,21 @@ export const TodoItem = ({
   const handleDelete = async () => {
     await deleteTodo(id);
   };
+
   const handleComplete = async () => {
     await update_todo(id, todo_name, !isChecked);
     updateTodos(id, todo_name, !isChecked);
     setChecked(!isChecked);
   };
+
   const handleEdit = () => {
     toggleEditing(!isEditing);
   };
+
   const handleChange = (e) => {
     setEditedText(e.target.value);
   };
+
   const handleSave = async (e) => {
     e.preventDefault();
     if (editedText.trim() !== "" && editedText !== todo_name) {
@@ -52,7 +57,7 @@ export const TodoItem = ({
       exit={{ opacity: 0, y: 20 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
-      {(!isChecked && !isEditing) && (
+      {!isChecked && !isEditing && (
         <div className={styles.leftBtns}>
           <MdKeyboardArrowUp size="40px" />
           <MdKeyboardArrowDown size="40px" />

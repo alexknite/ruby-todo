@@ -19,8 +19,8 @@ function App() {
     fetchTodos();
   }, []);
 
-  const addTodo = async (todo_name) => {
-    const todo = await create_todo(todo_name);
+  const addTodo = async (todo_name, index) => {
+    const todo = await create_todo(todo_name, index);
     setTodos([todo, ...todos]);
   };
 
