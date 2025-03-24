@@ -3,7 +3,7 @@ class Api::TodosController < ApplicationController
 
   # GET /todos
   def index
-    @todos = Todo.order(created_at: :desc)
+    @todos = Todo.order(:index)
 
     render json: @todos
   end
@@ -46,6 +46,6 @@ class Api::TodosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def todo_params
-      params.expect(todo: [ :todo_name, :completed ])
+      params.expect(todo: [ :todo_name, :completed, :index ])
     end
 end
