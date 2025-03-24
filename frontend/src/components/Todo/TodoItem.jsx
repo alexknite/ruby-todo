@@ -12,7 +12,6 @@ import styles from "../../styles/TodoItem.module.css";
 export const TodoItem = ({
   todo_name,
   id,
-  index,
   deleteTodo,
   completed,
   updateTodos,

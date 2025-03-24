@@ -5,7 +5,7 @@ import { TodoItem } from "./TodoItem";
 
 import styles from "../../styles/TodoList.module.css";
 
-export const TodoList = ({ todos, deleteTodo,  updateTodos }) => {
+export const TodoList = ({ todos, deleteTodo,  updateTodos, moveUp }) => {
   return (
     <AnimatePresence mode="popLayout">
       {todos.length > 0 && (
@@ -26,6 +26,8 @@ export const TodoList = ({ todos, deleteTodo,  updateTodos }) => {
                 completed={completed}
                 deleteTodo={deleteTodo}
                 updateTodos={updateTodos}
+                todos={todos}
+                moveUp={moveUp}
               />
             ))}
           </AnimatePresence>

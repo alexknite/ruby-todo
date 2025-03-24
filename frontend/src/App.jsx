@@ -19,8 +19,8 @@ function App() {
     fetchTodos();
   }, []);
 
-  const addTodo = async (todo_name, index) => {
-    const todo = await create_todo(todo_name, index);
+  const addTodo = async (todo_name) => {
+    const todo = await create_todo(todo_name);
     setTodos([todo, ...todos]);
   };
 
@@ -37,8 +37,24 @@ function App() {
       });
 
       return updatedTodos.sort((a, b) => a.completed - b.completed);
+      // return updatedTodos.sort((a, b) => a.position - b.position);
     });
   };
+
+  // const moveUp = (id) => {
+  //   setTodos((prevTodos) => {
+  //     const todosCopy = [...prevTodos];
+  //     const todoIndex = todosCopy.find((t) => t.id === id);
+
+  //     const temp = todosCopy[todoIndex];
+  //     todosCopy[todoIndex] = todosCopy[todoIndex - 1];
+  //     todosCopy[todoIndex - 1] = temp;
+  //     todosCopy[todoIndex].position--;
+  //     todosCopy[todoIndex - 1].position++;
+
+  //     return todosCopy;
+  //   });
+  // };
 
   return (
     <div className={styles.App}>
