@@ -50,47 +50,61 @@ export const TodoItem = ({
       exit={{ opacity: 0, y: 20 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
-      <div className={styles.checkboxWrapper}>
-        <input
-          id={`checkbox-${id}`}
-          type="checkbox"
-          checked={isChecked}
-          onChange={handleComplete}
-        />
-        <label htmlFor={`checkbox-${id}`}>
-          <div className={styles.tickMark}></div>
-        </label>
-      </div>
-      {isEditing ? (
-        <form onSubmit={handleSave} className={styles.formWrapper}>
+      {/* <div className={styles.checkboxWrapper}> */}
+      {/*   <input */}
+      {/*     id={`checkbox-${id}`} */}
+      {/*     type="checkbox" */}
+      {/*     checked={isChecked} */}
+      {/*     onChange={handleComplete} */}
+      {/*   /> */}
+      {/*   <label htmlFor={`checkbox-${id}`}> */}
+      {/*     <div className={styles.tickMark}></div> */}
+      {/*   </label> */}
+      {/* </div> */}
+      <div className={styles.content}>
+        {isEditing ? (
+          <form onSubmit={handleSave} className={styles.formWrapper}>
+            <AnimatePresence>
+              <motion.input
+                type="text"
+                value={editedText}
+                onChange={handleChange}
+                onBlur={handleEdit}
+                className={styles.editInput}
+                autoFocus
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+              />
+            </AnimatePresence>
+          </form>
+        ) : (
           <AnimatePresence>
             <motion.input
-              type="text"
-              value={editedText}
-              onChange={handleChange}
-              onBlur={handleEdit}
-              className={styles.editInput}
-              autoFocus
+              key={id}
+              id={`checkbox-${id}`}
+              type="checkbox"
+              checked={isChecked}
+              onChange={handleComplete}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 20 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
             />
+            <motion.label
+              htmlFor={`checkbox-${id}`}
+              className={styles.itemName}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            >
+              {todo_name}
+            </motion.label>
           </AnimatePresence>
-        </form>
-      ) : (
-        <AnimatePresence>
-          <motion.h3
-            className={styles.itemName}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 20 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-          >
-            {todo_name}
-          </motion.h3>
-        </AnimatePresence>
-      )}
+        )}
+      </div>
 
       <div className={styles.buttonWrapper}>
         <LiaEdit size="45px" onClick={handleEdit} />
