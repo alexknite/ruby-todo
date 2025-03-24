@@ -1,0 +1,16 @@
+@import "./vars.css";
+
+.App {
+  background-color: var(--color-bg);
+  width: 100%;
+  height: 100vh;
+  overflow: auto;
+}
+
+.container {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}

@@ -1,0 +1,57 @@
+@import "./vars.css";
+
+.navbar {
+  padding: 90px;
+}
+
+.title {
+  font-size: 40px;
+  text-align: center;
+  text-transform: uppercase;
+
+  /* Text Gradient */
+  background: radial-gradient(circle, var(--color-primary), var(--color-secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* .neonText { */
+/*   text-shadow: */
+/*     0 0 7px #fff, */
+/*     0 0 10px #fff, */
+/*     0 0 21px #fff, */
+/*     0 0 42px var(--color-neon), */
+/*     0 0 82px var(--color-neon), */
+/*     0 0 92px var(--color-neon), */
+/*     0 0 102px var(--color-neon), */
+/*     0 0 151px var(--color-neon); */
+
+/*   animation: pulsate 0.11s ease-in-out infinite alternate; */
+/* } */
+
+/* @keyframes pulsate { */
+/*   100% { */
+/*     text-shadow: */
+/*       0 0 4px #fff, */
+/*       0 0 11px #fff, */
+/*       0 0 19px #fff, */
+/*       0 0 40px var(--color-neon), */
+/*       0 0 80px var(--color-neon), */
+/*       0 0 90px var(--color-neon), */
+/*       0 0 100px var(--color-neon), */
+/*       0 0 150px var(--color-neon); */
+/*   } */
+
+/*   0% { */
+/*     text-shadow: */
+/*       0 0 4px #fff, */
+/*       0 0 10px #fff, */
+/*       0 0 18px #fff, */
+/*       0 0 38px var(--color-neon), */
+/*       0 0 73px var(--color-neon), */
+/*       0 0 80px var(--color-neon), */
+/*       0 0 94px var(--color-neon), */
+/*       0 0 140px var(--color-neon); */
+/*   } */
+/* } */

@@ -1,0 +1,13 @@
+:root {
+  /* Colors */
+  --color-gray: #9b9b9b;
+  --color-text: #fff;
+  --color-bg: #222222;
+  --color-primary: #f08080;
+  --color-secondary: #ef7fb7;
+  --color-todo_item-bg: rgba(65, 65, 65, 0.45); 
+ 
+
+  /* Fonts */
+  --font-fira: "Fira Code Variable";
+}
