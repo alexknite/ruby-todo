@@ -5,16 +5,18 @@ import { IoTrash } from "react-icons/io5";
 import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
 
-import { update_todo } from "../../api/endpoints";
+import { update_todo, update_position } from "../../api/endpoints";
 
 import styles from "../../styles/TodoItem.module.css";
 
 export const TodoItem = ({
   todo_name,
   id,
+  position,
   deleteTodo,
   completed,
   updateTodos,
+  moveUp,
 }) => {
   const [isChecked, setChecked] = useState(completed);
   const [isEditing, toggleEditing] = useState(false);
@@ -47,6 +49,22 @@ export const TodoItem = ({
     toggleEditing(false);
   };
 
+  const handleMoveUp = async () => {
+    if (position > 0) {
+      const newPosition = position - 1;
+      await update_position(id, newPosition);
+      moveUp(id, newPosition);
+    }
+  };
+
+  // const handleMoveDown = async () => {
+  //   if (position < length) {
+  //     const newPosition = position - 1;
+  //     await update_position(id, newPosition);
+  //     moveDown(id, newPosition);
+  //   }
+  // };
+
   return (
     <motion.div
       className={styles.container}
@@ -57,10 +75,16 @@ export const TodoItem = ({
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
       {!isChecked && !isEditing && (
-        <div className={styles.leftBtns}>
-          <MdKeyboardArrowUp size="40px" />
+        <motion.div
+          className={styles.leftBtns}
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 20 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+          <MdKeyboardArrowUp size="40px" onClick={handleMoveUp} />
           <MdKeyboardArrowDown size="40px" />
-        </div>
+        </motion.div>
       )}
       <div className={styles.content}>
         {isEditing ? (
@@ -108,7 +132,16 @@ export const TodoItem = ({
       </div>
 
       <div className={styles.rightBtns}>
-        {!isChecked && <LiaEdit size="45px" onClick={handleEdit} />}
+        {!isChecked && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          >
+            <LiaEdit size="45px" onClick={handleEdit} />
+          </motion.div>
+        )}
         <IoTrash size="40px" onClick={handleDelete} />
       </div>
     </motion.div>

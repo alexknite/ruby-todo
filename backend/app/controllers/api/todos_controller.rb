@@ -3,7 +3,7 @@ class Api::TodosController < ApplicationController
 
 # GET /todos
 def index
-  @todos = Todo.order(position: :desc)
+  @todos = Todo.order(position: :asc)
   render json: @todos
 end
 
@@ -35,6 +35,25 @@ end
   # DELETE /todos/1
   def destroy
     @todo.destroy!
+  end
+
+  def update_position
+    todo = Todo.find(params[:id])
+    new_position = params[:position].to_i
+
+    if new_position > todo.position
+      Todo.where("position > ? AND position <= ?", todo.position, new_position).each do |t|
+        t.update(position: t.position - 1)
+      end
+    elsif new_position < todo.position
+      Todo.where("position < ? AND position >= ?", todo.position, new_position).each do |t|
+        t.update(position: t.position + 1)
+      end
+    end
+
+    todo.update(position: new_position)
+
+    render json: todo
   end
 
   private

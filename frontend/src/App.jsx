@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 
-import { get_todos, create_todo, delete_todo } from "./api/endpoints";
+import {
+  get_todos,
+  create_todo,
+  delete_todo,
+} from "./api/endpoints";
 
 import styles from "./styles/App.module.css";
 
@@ -11,6 +15,8 @@ import { AddTodo } from "./components/Todo/AddTodo";
 function App() {
   const [todos, setTodos] = useState([]);
 
+  const length = todos.length;
+
   useEffect(() => {
     const fetchTodos = async () => {
       const todos = await get_todos();
@@ -20,8 +26,8 @@ function App() {
   }, []);
 
   const addTodo = async (todo_name) => {
-    const todo = await create_todo(todo_name);
-    setTodos([todo, ...todos]);
+    const todo = await create_todo(todo_name, length);
+    setTodos([...todos, todo]);
   };
 
   const deleteTodo = async (id) => {
@@ -37,22 +43,30 @@ function App() {
       });
 
       return updatedTodos.sort((a, b) => a.completed - b.completed);
-      // return updatedTodos.sort((a, b) => a.position - b.position);
     });
   };
 
-  // const moveUp = (id) => {
+  const moveUp = (id, newPosition) => {
+    setTodos((prevTodos) => {
+      const updatedTodos = prevTodos.map((t) => {
+        if (t.position === newPosition)
+          return { ...t, position: newPosition + 1 };
+        else if (t.id == id) return { ...t, position: newPosition };
+        else return t;
+      });
+      return updatedTodos.sort((a, b) => a.position - b.position);
+    });
+  };
+
+  // const moveDown = (id, newPosition) => {
   //   setTodos((prevTodos) => {
-  //     const todosCopy = [...prevTodos];
-  //     const todoIndex = todosCopy.find((t) => t.id === id);
-
-  //     const temp = todosCopy[todoIndex];
-  //     todosCopy[todoIndex] = todosCopy[todoIndex - 1];
-  //     todosCopy[todoIndex - 1] = temp;
-  //     todosCopy[todoIndex].position--;
-  //     todosCopy[todoIndex - 1].position++;
-
-  //     return todosCopy;
+  //     const updatedTodos = prevTodos.map((t) => {
+  //       if (t.position === newPosition)
+  //         return { ...t, position: newPosition - 1 };
+  //       else if (t.id == id) return { ...t, position: newPosition };
+  //       else return t;
+  //     });
+  //     return updatedTodos.sort((a, b) => a.position - b.position);
   //   });
   // };
 
@@ -65,6 +79,9 @@ function App() {
           todos={todos}
           deleteTodo={deleteTodo}
           updateTodos={updateTodos}
+          moveUp={moveUp}
+          /* moveDown={moveDown} */
+          length={length}
         />
       </div>
     </div>
