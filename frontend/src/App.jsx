@@ -15,7 +15,6 @@ import { AddTodo } from "./components/Todo/AddTodo";
 function App() {
   const [todos, setTodos] = useState([]);
 
-  const length = todos.length;
 
   useEffect(() => {
     const fetchTodos = async () => {
@@ -26,7 +25,7 @@ function App() {
   }, []);
 
   const addTodo = async (todo_name) => {
-    const todo = await create_todo(todo_name, length);
+    const todo = await create_todo(todo_name, todos.length);
     setTodos([...todos, todo]);
   };
 
@@ -58,17 +57,17 @@ function App() {
     });
   };
 
-  // const moveDown = (id, newPosition) => {
-  //   setTodos((prevTodos) => {
-  //     const updatedTodos = prevTodos.map((t) => {
-  //       if (t.position === newPosition)
-  //         return { ...t, position: newPosition - 1 };
-  //       else if (t.id == id) return { ...t, position: newPosition };
-  //       else return t;
-  //     });
-  //     return updatedTodos.sort((a, b) => a.position - b.position);
-  //   });
-  // };
+  const moveDown = (id, newPosition) => {
+    setTodos((prevTodos) => {
+      const updatedTodos = prevTodos.map((t) => {
+        if (t.position === newPosition)
+          return { ...t, position: newPosition - 1 };
+        else if (t.id == id) return { ...t, position: newPosition };
+        else return t;
+      });
+      return updatedTodos.sort((a, b) => a.position - b.position);
+    });
+  };
 
   return (
     <div className={styles.App}>
@@ -80,8 +79,7 @@ function App() {
           deleteTodo={deleteTodo}
           updateTodos={updateTodos}
           moveUp={moveUp}
-          /* moveDown={moveDown} */
-          length={length}
+          moveDown={moveDown}
         />
       </div>
     </div>

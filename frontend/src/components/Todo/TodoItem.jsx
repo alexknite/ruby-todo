@@ -10,13 +10,15 @@ import { update_todo, update_position } from "../../api/endpoints";
 import styles from "../../styles/TodoItem.module.css";
 
 export const TodoItem = ({
-  todo_name,
+  length,
   id,
   position,
-  deleteTodo,
+  todo_name,
   completed,
+  deleteTodo,
   updateTodos,
   moveUp,
+  moveDown,
 }) => {
   const [isChecked, setChecked] = useState(completed);
   const [isEditing, toggleEditing] = useState(false);
@@ -57,13 +59,13 @@ export const TodoItem = ({
     }
   };
 
-  // const handleMoveDown = async () => {
-  //   if (position < length) {
-  //     const newPosition = position - 1;
-  //     await update_position(id, newPosition);
-  //     moveDown(id, newPosition);
-  //   }
-  // };
+  const handleMoveDown = async () => {
+    if (position < length - 1) {
+      const newPosition = position + 1;
+      await update_position(id, newPosition);
+      moveDown(id, newPosition);
+    }
+  };
 
   return (
     <motion.div
@@ -83,7 +85,7 @@ export const TodoItem = ({
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
           <MdKeyboardArrowUp size="40px" onClick={handleMoveUp} />
-          <MdKeyboardArrowDown size="40px" />
+          <MdKeyboardArrowDown size="40px" onClick={handleMoveDown} />
         </motion.div>
       )}
       <div className={styles.content}>
