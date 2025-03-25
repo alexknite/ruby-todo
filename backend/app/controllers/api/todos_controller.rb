@@ -45,8 +45,6 @@ class Api::TodosController < ApplicationController
     @todo.destroy!
   end
 
-  def update_complete_position
-
   def update_position
     todo = Todo.find(params[:id])
     new_position = params[:position].to_i
@@ -63,13 +61,6 @@ class Api::TodosController < ApplicationController
       Todo.where("position < ? AND position >= ?", todo.position, new_position).each do |t|
         t.update_complete(position: t.position + 1)
       end
-    end
-
-    todo.update_complete(position: new_position)
-      Todo.where("position > ? AND position <= ?", todo.position, new_position).update_all("position = position - 1")
-      # If moving up (new position is lesser), increment the position of todos in between
-    elsif new_position < todo.position
-      Todo.where("position < ? AND position >= ?", todo.position, new_position).update_all("position = position + 1")
     end
 
     # Update the position of the todo itself
