@@ -7,13 +7,14 @@ import styles from "../../styles/TodoList.module.css";
 
 export const TodoList = ({
   todos,
-  deleteTodo,
-  updateTodos,
+  deleteItem,
+  updateCompleted,
+  updateContent,
   moveUp,
   moveDown,
-}) => {
+}) => { 
   return (
-    <AnimatePresence mode="popLayout">
+    <AnimatePresence>
       {todos.length > 0 && (
         <motion.section
           className={styles.container}
@@ -23,16 +24,17 @@ export const TodoList = ({
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
           <AnimatePresence mode="popLayout">
-            {todos.map(({ id, todo_name, completed, position }) => (
+            {todos.map(({ id, content, completed, position }) => (
               <TodoItem
                 length={todos.length}
                 key={id}
                 id={id}
                 position={position}
-                todo_name={todo_name}
+                content={content}
                 completed={completed}
-                deleteTodo={deleteTodo}
-                updateTodos={updateTodos}
+                deleteItem={deleteItem}
+                updateCompleted={updateCompleted}
+                updateContent={updateContent}
                 moveUp={moveUp}
                 moveDown={moveDown}
               />

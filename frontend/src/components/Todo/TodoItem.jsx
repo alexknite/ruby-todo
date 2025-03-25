@@ -5,7 +5,7 @@ import { IoTrash } from "react-icons/io5";
 import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
 
-import { update_todo, update_position } from "../../api/endpoints";
+import { update_complete, update_content } from "../../api/endpoints";
 
 import styles from "../../styles/TodoItem.module.css";
 
@@ -13,25 +13,26 @@ export const TodoItem = ({
   length,
   id,
   position,
-  todo_name,
+  content,
   completed,
-  deleteTodo,
-  updateTodos,
+  deleteItem,
+  updateCompleted,
+  updateContent,
   moveUp,
   moveDown,
 }) => {
   const [isChecked, setChecked] = useState(completed);
   const [isEditing, toggleEditing] = useState(false);
-  const [editedText, setEditedText] = useState(todo_name);
+  const [editedContent, setEditedText] = useState(content);
 
   const handleDelete = async () => {
-    await deleteTodo(id);
+    await deleteItem(id);
   };
 
   const handleComplete = async () => {
-    await update_todo(id, todo_name, !isChecked);
-    await update_position(id, length - 1);
-    updateTodos(id, todo_name, !isChecked);
+    await update_complete(id, !isChecked);
+    // await update_position(id, length - 1);
+    updateCompleted(id, !isChecked);
     setChecked(!isChecked);
   };
 
@@ -45,17 +46,16 @@ export const TodoItem = ({
 
   const handleSave = async (e) => {
     e.preventDefault();
-    if (editedText.trim() !== "" && editedText !== todo_name) {
-      await update_todo(id, editedText, completed);
-      updateTodos(id, editedText, completed);
+    if (editedContent.trim() !== "" && editedContent !== content) {
+      await update_content(id, editedContent);
+      updateContent(id, editedContent);
     }
     toggleEditing(false);
-  };
+  }
 
   const handleMoveUp = async () => {
     if (position > 0) {
       const newPosition = position - 1;
-      await update_position(id, newPosition);
       moveUp(id, newPosition);
     }
   };
@@ -63,13 +63,13 @@ export const TodoItem = ({
   const handleMoveDown = async () => {
     if (position < length - 1) {
       const newPosition = position + 1;
-      await update_position(id, newPosition);
       moveDown(id, newPosition);
     }
   };
 
   return (
     <motion.div
+      key={id}
       className={styles.container}
       layout
       initial={{ opacity: 0, y: -20 }}
@@ -99,7 +99,7 @@ export const TodoItem = ({
             <AnimatePresence>
               <motion.input
                 type="text"
-                value={editedText}
+                value={editedContent}
                 onChange={handleChange}
                 onBlur={handleEdit}
                 className={styles.editInput}
@@ -132,7 +132,7 @@ export const TodoItem = ({
               exit={{ opacity: 0, x: 20 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
             >
-              {todo_name}
+              {content}
             </motion.label>
           </AnimatePresence>
         )}

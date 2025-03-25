@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { get_todos, create_todo, delete_todo } from "./api/endpoints";
+import { get_todos, create_item, delete_item, update_position } from "./api/endpoints";
 
 import styles from "./styles/App.module.css";
 
@@ -19,60 +19,70 @@ function App() {
     fetchTodos();
   }, []);
 
-  const addTodo = async (todo_name) => {
-    const todo = await create_todo(todo_name, todos.length);
+  const createItem = async (content) => {
+    const todo = await create_item(content, todos.length);
     setTodos([...todos, todo]);
   };
 
-  const deleteTodo = async (id) => {
-    delete_todo(id);
+  const deleteItem = async (id) => {
+    delete_item(id);
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
-  const updateTodos = (id, editedText, completed) => {
+  const updateCompleted = (id, completed) => {
     setTodos((prevTodos) => {
-      const updatedTodos = prevTodos.map((t) => {
-        if (t.id === id) return { ...t, todo_name: editedText, completed:completed };
+      const updated = prevTodos.map((t) => {
+        if (t.id === id) return { ...t, completed:completed };
         else return t;
       });
 
-      return updatedTodos.sort((a, b) => a.completed - b.completed);
+      return updated;
     });
   };
 
-  const moveUp = (id, newPosition) => {
+  const updateContent = (id, editedContent) => {
     setTodos((prevTodos) => {
-      const updatedTodos = prevTodos.map((t) => {
-        if (t.position === newPosition)
-          return { ...t, position: newPosition + 1 };
-        else if (t.id == id) return { ...t, position: newPosition };
+      const updated = prevTodos.map((t) => {
+        if (t.id === id) return { ...t, content: editedContent };
         else return t;
       });
-      return updatedTodos.sort((a, b) => a.position - b.position);
+
+      return updated;
     });
   };
 
-  const moveDown = (id, newPosition) => {
-    setTodos((prevTodos) => {
-      const updatedTodos = prevTodos.map((t) => {
-        if (t.position === newPosition)
-          return { ...t, position: newPosition - 1 };
-        else if (t.id == id) return { ...t, position: newPosition };
-        else return t;
-      });
-      return updatedTodos.sort((a, b) => a.position - b.position);
+const moveUp = async (id, newPosition) => {
+  await update_position(id, newPosition); // Update position in the backend
+  setTodos((prevTodos) => {
+    const updated = prevTodos.map((t) => {
+      if (t.id === id) return { ...t, position: newPosition };
+      return t;
     });
-  };
+    return updated;
+  });
+};
+
+const moveDown = async (id, newPosition) => {
+  await update_position(id, newPosition); // Update position in the backend
+  setTodos((prevTodos) => {
+    const updated = prevTodos.map((t) => {
+      if (t.id === id) return { ...t, position: newPosition };
+      return t;
+    });
+    return updated;
+  });
+};
 
   return (
     <div className={styles.App}>
       <div className={styles.container}>
         <Header />
-        <AddTodo addTodo={addTodo} />
+        <AddTodo createItem={createItem} />
         <TodoList
           todos={todos}
-          deleteTodo={deleteTodo}
-          updateTodos={updateTodos}
+          deleteItem={deleteItem}
+          updateCompleted={updateCompleted}
+          updateContent={updateContent}
           moveUp={moveUp}
           moveDown={moveDown}
         />

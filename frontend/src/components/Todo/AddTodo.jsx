@@ -2,13 +2,13 @@ import React, { useState } from "react";
 
 import styles from "../../styles/AddTodo.module.css";
 
-export const AddTodo = ({ addTodo }) => {
+export const AddTodo = ({ createItem }) => {
   const [input, setInput] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (input.trim() !== "") {
-      addTodo(input);
+      createItem(input);
       setInput("");
     }
   };
