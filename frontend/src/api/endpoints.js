@@ -4,7 +4,7 @@ const BASE_URL = "http://127.0.0.1:3000/api/";
 const GET_URL = `${BASE_URL}todos`;
 const POST_URL = `${BASE_URL}todos`;
 const DELETE_URL = (id) => `${BASE_URL}todos/${id}`;
-const UPDATE_URL = (id) => `${BASE_URL}todos/${id}/update`;
+const UPDATE_COMPLETE_URL = (id) => `${BASE_URL}todos/${id}/update_complete`;
 const UPDATE_POS_URL = (id) => `${BASE_URL}/todos/${id}/update_position`;
 
 export const get_todos = async () => {
@@ -26,9 +26,8 @@ export const delete_todo = async (id) => {
   return res.data;
 };
 
-export const update_todo = async (id, content, completed) => {
-  const res = await axios.patch(UPDATE_URL(id), {
-    content: content,
+export const update_complete = async (id, completed) => {
+  const res = await axios.patch(UPDATE_COMPLETE_URL(id), {
     completed: completed,
   });
   return res.data;

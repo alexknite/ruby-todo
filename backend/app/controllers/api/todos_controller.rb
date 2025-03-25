@@ -1,5 +1,5 @@
 class Api::TodosController < ApplicationController
-  before_action :set_todo, only: %i[ show update destroy ]
+  before_action :set_todo, only: %i[ show update_complete destroy ]
 
 # GET /todos
 def index
@@ -24,7 +24,7 @@ end
   end
 
   # PATCH/PUT /todos/1
-  def update
+  def update_complete
     if @todo.update(todo_params)
       render json: @todo
     else
@@ -37,21 +37,21 @@ end
     @todo.destroy!
   end
 
-  def update_position
+  def update_complete_position
     todo = Todo.find(params[:id])
     new_position = params[:position].to_i
 
     if new_position > todo.position
       Todo.where("position > ? AND position <= ?", todo.position, new_position).each do |t|
-        t.update(position: t.position - 1)
+        t.update_complete(position: t.position - 1)
       end
     elsif new_position < todo.position
       Todo.where("position < ? AND position >= ?", todo.position, new_position).each do |t|
-        t.update(position: t.position + 1)
+        t.update_complete(position: t.position + 1)
       end
     end
 
-    todo.update(position: new_position)
+    todo.update_complete(position: new_position)
 
     render json: todo
   end

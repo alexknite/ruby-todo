@@ -5,7 +5,7 @@ import { IoTrash } from "react-icons/io5";
 import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
 
-import { update_todo, update_position } from "../../api/endpoints";
+import { update_complete, update_position } from "../../api/endpoints";
 
 import styles from "../../styles/TodoItem.module.css";
 
@@ -29,8 +29,8 @@ export const TodoItem = ({
   };
 
   const handleComplete = async () => {
-    await update_todo(id, content, !isChecked);
-    await update_position(id, length - 1);
+    await update_complete(id, !isChecked);
+    // await update_position(id, length - 1);
     updateTodos(id, content, !isChecked);
     setChecked(!isChecked);
   };
@@ -46,7 +46,7 @@ export const TodoItem = ({
   const handleSave = async (e) => {
     e.preventDefault();
     if (editedText.trim() !== "" && editedText !== content) {
-      await update_todo(id, editedText, completed);
+      // await update_todo(id, editedText, completed);
       updateTodos(id, editedText, completed);
     }
     toggleEditing(false);
