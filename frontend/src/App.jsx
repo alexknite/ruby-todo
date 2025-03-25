@@ -1,10 +1,6 @@
 import { useState, useEffect } from "react";
 
-import {
-  get_todos,
-  create_todo,
-  delete_todo,
-} from "./api/endpoints";
+import { get_todos, create_todo, delete_todo } from "./api/endpoints";
 
 import styles from "./styles/App.module.css";
 
@@ -14,7 +10,6 @@ import { AddTodo } from "./components/Todo/AddTodo";
 
 function App() {
   const [todos, setTodos] = useState([]);
-
 
   useEffect(() => {
     const fetchTodos = async () => {
@@ -37,7 +32,7 @@ function App() {
   const updateTodos = (id, editedText, completed) => {
     setTodos((prevTodos) => {
       const updatedTodos = prevTodos.map((t) => {
-        if (t.id === id) return { ...t, todo_name: editedText, completed };
+        if (t.id === id) return { ...t, todo_name: editedText, completed:completed };
         else return t;
       });
 

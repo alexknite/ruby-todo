@@ -30,6 +30,7 @@ export const TodoItem = ({
 
   const handleComplete = async () => {
     await update_todo(id, todo_name, !isChecked);
+    await update_position(id, length - 1);
     updateTodos(id, todo_name, !isChecked);
     setChecked(!isChecked);
   };
@@ -84,8 +85,12 @@ export const TodoItem = ({
           exit={{ opacity: 0, x: 20 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          <MdKeyboardArrowUp size="40px" onClick={handleMoveUp} />
-          <MdKeyboardArrowDown size="40px" onClick={handleMoveDown} />
+          {position !== 0 && (
+            <MdKeyboardArrowUp size="40px" onClick={handleMoveUp} />
+          )}
+          {position !== length - 1 && (
+            <MdKeyboardArrowDown size="40px" onClick={handleMoveDown} />
+          )}
         </motion.div>
       )}
       <div className={styles.content}>
