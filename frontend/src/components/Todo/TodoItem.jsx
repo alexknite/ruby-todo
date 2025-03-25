@@ -31,7 +31,6 @@ export const TodoItem = ({
 
   const handleComplete = async () => {
     await update_complete(id, !isChecked);
-    // await update_position(id, length - 1);
     updateCompleted(id, !isChecked);
     setChecked(!isChecked);
   };

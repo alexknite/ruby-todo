@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 
-import { get_todos, create_item, delete_item, update_position } from "./api/endpoints";
+import {
+  get_todos,
+  create_item,
+  delete_item,
+  update_position,
+} from "./api/endpoints";
 
 import styles from "./styles/App.module.css";
 
@@ -29,50 +34,74 @@ function App() {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
-  const updateCompleted = (id, completed) => {
-    setTodos((prevTodos) => {
-      const updated = prevTodos.map((t) => {
-        if (t.id === id) return { ...t, completed:completed };
-        else return t;
-      });
 
-      return updated;
+const updateCompleted = (id, completed) => {
+  setTodos((prevTodos) => {
+    const updated = prevTodos.map((t) =>
+      t.id === id ? { ...t, completed } : t
+    );
+
+    // Sort: Completed first, then position
+    return updated.sort((a, b) => {
+      if (a.completed === b.completed) {
+        return a.position - b.position; // Sort by position if completed status is the same
+      }
+      return b.completed - a.completed; // Completed tasks first
     });
-  };
+  });
+};
+
 
   const updateContent = (id, editedContent) => {
     setTodos((prevTodos) => {
-      const updated = prevTodos.map((t) => {
-        if (t.id === id) return { ...t, content: editedContent };
-        else return t;
-      });
+      const index = prevTodos.findIndex((t) => t.id === id);
+      const updated = [...prevTodos];
 
-      return updated;
+      updated[index].content = editedContent;
+
+      return [...updated];
     });
   };
 
-const moveUp = async (id, newPosition) => {
-  await update_position(id, newPosition); // Update position in the backend
-  setTodos((prevTodos) => {
-    const updated = prevTodos.map((t) => {
-      if (t.id === id) return { ...t, position: newPosition };
-      return t;
-    });
-    return updated;
-  });
-};
+  const moveUp = async (id, newPosition) => {
+    if (newPosition < 0) return;
+    await update_position(id, newPosition);
+    setTodos((prevTodos) => {
+      const index = prevTodos.findIndex((t) => t.id === id);
+      if (index <= 0) return prevTodos;
+      const updated = [...prevTodos];
 
-const moveDown = async (id, newPosition) => {
-  await update_position(id, newPosition); // Update position in the backend
-  setTodos((prevTodos) => {
-    const updated = prevTodos.map((t) => {
-      if (t.id === id) return { ...t, position: newPosition };
-      return t;
-    });
-    return updated;
-  });
-};
+      [updated[index], updated[index - 1]] = [
+        updated[index - 1],
+        updated[index],
+      ];
 
+      updated[index].position = newPosition;
+      updated[index - 1].position = newPosition + 1;
+
+      return [...updated];
+    });
+  };
+
+  const moveDown = async (id, newPosition) => {
+    if (newPosition >= todos.length) return;
+    await update_position(id, newPosition);
+    setTodos((prevTodos) => {
+      const index = prevTodos.findIndex((t) => t.id === id);
+      if (index === -1 || index >= prevTodos.length - 1) return prevTodos;
+      const updated = [...prevTodos];
+
+      [updated[index], updated[index + 1]] = [
+        updated[index + 1],
+        updated[index],
+      ];
+
+      updated[index].position = updated[index + 1].position;
+      updated[index + 1].position = newPosition;
+
+      return [...updated];
+    });
+  };
   return (
     <div className={styles.App}>
       <div className={styles.container}>

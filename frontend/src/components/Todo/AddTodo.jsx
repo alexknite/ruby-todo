@@ -22,6 +22,7 @@ export const AddTodo = ({ createItem }) => {
           name="input"
           placeholder="Type something..."
           value={input}
+          autoFocus
           onChange={(e) => setInput(e.target.value)}
         />
         <label htmlFor="input" className={styles.label}>

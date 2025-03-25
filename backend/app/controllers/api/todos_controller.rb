@@ -55,11 +55,11 @@ class Api::TodosController < ApplicationController
     # If moving down (new position is greater), decrement the position of todos in between
     if new_position > todo.position
       Todo.where("position > ? AND position <= ?", todo.position, new_position).each do |t|
-        t.update_complete(position: t.position - 1)
+        t.update(position: t.position - 1)
       end
     elsif new_position < todo.position
       Todo.where("position < ? AND position >= ?", todo.position, new_position).each do |t|
-        t.update_complete(position: t.position + 1)
+        t.update(position: t.position + 1)
       end
     end
 
