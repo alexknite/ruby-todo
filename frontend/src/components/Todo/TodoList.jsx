@@ -24,7 +24,6 @@ export const TodoList = ({
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
           <AnimatePresence mode="popLayout">
-          <AnimatePresence>
             {todos.map(({ id, content, completed, position }) => (
               <TodoItem
                 length={todos.length}

@@ -19,8 +19,8 @@ function App() {
     fetchTodos();
   }, []);
 
-  const addTodo = async (content) => {
-    const todo = await create_todo(content, todos.length);
+  const createItem = async (content) => {
+    const todo = await create_item(content, todos.length);
     setTodos([...todos, todo]);
   };
 
@@ -31,8 +31,8 @@ function App() {
 
   const updateCompleted = (id, completed) => {
     setTodos((prevTodos) => {
-      const updatedTodos = prevTodos.map((t) => {
-        if (t.id === id) return { ...t, content: editedText, completed:completed };
+      const updated = prevTodos.map((t) => {
+        if (t.id === id) return { ...t, completed:completed };
         else return t;
       });
 

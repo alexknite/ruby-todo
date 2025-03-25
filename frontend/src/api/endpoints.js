@@ -5,7 +5,6 @@ const GET_URL = `${BASE_URL}todos`;
 const POST_URL = `${BASE_URL}todos`;
 const DELETE_URL = (id) => `${BASE_URL}todos/${id}`;
 const UPDATE_COMPLETE_URL = (id) => `${BASE_URL}todos/${id}/update_complete`;
-const UPDATE_POS_URL = (id) => `${BASE_URL}/todos/${id}/update_position`;
 const UPDATE_CONTENT_URL = (id) => `${BASE_URL}todos/${id}/update_content`;
 const UPDATE_POSITION_URL = (id) => `${BASE_URL}/todos/${id}/update_position`;
 
@@ -14,7 +13,6 @@ export const get_todos = async () => {
   return res.data;
 };
 
-export const create_todo = async (content, position) => {
 export const create_item = async (content, position) => {
   const res = await axios.post(POST_URL, {
     content: content,
