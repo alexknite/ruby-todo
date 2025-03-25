@@ -64,6 +64,6 @@ end
 
     # Only allow a list of trusted parameters through.
     def todo_params
-      params.expect(todo: [ :todo_name, :completed, :position ])
+      params.expect(todo: [ :content, :completed, :position ])
     end
 end

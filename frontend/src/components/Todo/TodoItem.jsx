@@ -13,7 +13,7 @@ export const TodoItem = ({
   length,
   id,
   position,
-  todo_name,
+  content,
   completed,
   deleteTodo,
   updateTodos,
@@ -22,16 +22,16 @@ export const TodoItem = ({
 }) => {
   const [isChecked, setChecked] = useState(completed);
   const [isEditing, toggleEditing] = useState(false);
-  const [editedText, setEditedText] = useState(todo_name);
+  const [editedText, setEditedText] = useState(content);
 
   const handleDelete = async () => {
     await deleteTodo(id);
   };
 
   const handleComplete = async () => {
-    await update_todo(id, todo_name, !isChecked);
+    await update_todo(id, content, !isChecked);
     await update_position(id, length - 1);
-    updateTodos(id, todo_name, !isChecked);
+    updateTodos(id, content, !isChecked);
     setChecked(!isChecked);
   };
 
@@ -45,7 +45,7 @@ export const TodoItem = ({
 
   const handleSave = async (e) => {
     e.preventDefault();
-    if (editedText.trim() !== "" && editedText !== todo_name) {
+    if (editedText.trim() !== "" && editedText !== content) {
       await update_todo(id, editedText, completed);
       updateTodos(id, editedText, completed);
     }
@@ -132,7 +132,7 @@ export const TodoItem = ({
               exit={{ opacity: 0, x: 20 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
             >
-              {todo_name}
+              {content}
             </motion.label>
           </AnimatePresence>
         )}

@@ -12,9 +12,9 @@ export const get_todos = async () => {
   return res.data;
 };
 
-export const create_todo = async (todo_name, position) => {
+export const create_todo = async (content, position) => {
   const res = await axios.post(POST_URL, {
-    todo_name: todo_name,
+    content: content,
     completed: false,
     position: position,
   });
@@ -26,9 +26,9 @@ export const delete_todo = async (id) => {
   return res.data;
 };
 
-export const update_todo = async (id, todo_name, completed) => {
+export const update_todo = async (id, content, completed) => {
   const res = await axios.patch(UPDATE_URL(id), {
-    todo_name: todo_name,
+    content: content,
     completed: completed,
   });
   return res.data;
