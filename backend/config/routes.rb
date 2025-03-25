@@ -5,6 +5,9 @@ Rails.application.routes.draw do
         patch :update_complete
       end
       member do
+        patch :update_content
+      end
+      member do
         patch :update_position
       end
     end

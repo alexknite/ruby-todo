@@ -6,6 +6,8 @@ const POST_URL = `${BASE_URL}todos`;
 const DELETE_URL = (id) => `${BASE_URL}todos/${id}`;
 const UPDATE_COMPLETE_URL = (id) => `${BASE_URL}todos/${id}/update_complete`;
 const UPDATE_POS_URL = (id) => `${BASE_URL}/todos/${id}/update_position`;
+const UPDATE_CONTENT_URL = (id) => `${BASE_URL}todos/${id}/update_content`;
+const UPDATE_POSITION_URL = (id) => `${BASE_URL}/todos/${id}/update_position`;
 
 export const get_todos = async () => {
   const res = await axios.get(GET_URL);
@@ -13,6 +15,7 @@ export const get_todos = async () => {
 };
 
 export const create_todo = async (content, position) => {
+export const create_item = async (content, position) => {
   const res = await axios.post(POST_URL, {
     content: content,
     completed: false,
@@ -21,8 +24,15 @@ export const create_todo = async (content, position) => {
   return res.data;
 };
 
-export const delete_todo = async (id) => {
+export const delete_item = async (id) => {
   const res = await axios.delete(DELETE_URL(id));
+  return res.data;
+};
+
+export const update_content = async (id, content) => {
+  const res = await axios.patch(UPDATE_CONTENT_URL(id), {
+    content: content,
+  });
   return res.data;
 };
 
@@ -33,9 +43,9 @@ export const update_complete = async (id, completed) => {
   return res.data;
 };
 
-export const update_position = async (id, newPosition) => {
-  const res = await axios.patch(UPDATE_POS_URL(id), {
-    position: newPosition,
+export const update_position = async (id, position) => {
+  const res = await axios.patch(UPDATE_POSITION_URL(id), {
+    position: position,
   });
   return res.data;
 };
