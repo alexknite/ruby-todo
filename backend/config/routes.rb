@@ -3,13 +3,14 @@ Rails.application.routes.draw do
     resources :todos do
       member do
         patch :update_complete
-      end
-      member do
         patch :update_content
-      end
-      member do
         patch :update_position
       end
     end
+
+    resources :tags, only: [ :index, :create ]
+
+    delete "todo_tags", to: "todo_tags#destroy"
+    delete "tags/:id", to: "tags#destroy", as: "delete_tag"
   end
 end
