@@ -36,17 +36,21 @@ function App() {
 
   const updateCompleted = (id, completed) => {
     setTodos((prevTodos) => {
-      const updated = prevTodos.map((t) =>
+      let updated = prevTodos.map((t) =>
         t.id === id ? { ...t, completed } : t,
       );
 
-      // Sort: Completed first, then position
-      return updated.sort((a, b) => {
-        if (a.completed === b.completed) {
-          return a.position - b.position; // Sort by position if completed status is the same
-        }
-        return b.completed - a.completed; // Completed tasks first
-      });
+      if (completed) {
+        const task = updated.find((t) => t.id === id);
+        updated = updated.filter((t) => t.id !== id);
+
+        updated = [
+          { ...task, position: 0 },
+          ...updated.map((t, i) => ({ ...t, position: i + 1 })),
+        ];
+      }
+
+      return updated;
     });
   };
 
@@ -68,6 +72,7 @@ function App() {
       const updated = [...prevTodos];
       const item1 = updated.find((t) => t.id === id);
       const index = updated.indexOf(item1);
+
       const item2 = updated.find((t) => t.position === newPosition);
 
       [updated[index], updated[index - 1]] = [
@@ -89,6 +94,12 @@ function App() {
       const updated = [...prevTodos];
       const item1 = updated.find((t) => t.id === id);
       const index = updated.indexOf(item1);
+
+      // if (index >= length - 1) {
+      //   console.log("out of bounds");
+      //   return prevTodos;
+      // }
+
       const item2 = updated.find((t) => t.position === newPosition);
 
       [updated[index], updated[index + 1]] = [

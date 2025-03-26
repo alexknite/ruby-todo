@@ -25,11 +25,19 @@ class Api::TodosController < ApplicationController
 
   # PATCH/PUT /todos/1
   def update_complete
-    if @todo.update(completed: params[:completed])
-      render json: @todo
-    else
-      render json: @todo.errors, status: :unprocessable_entity
+    Todo.transaction do
+      if params[:completed] == true
+        old_position = @todo.position
+
+        Todo.where("position < ?", old_position).update_all("position = position + 1")
+
+        @todo.update!(completed: true, position: 0)
+      else
+        @todo.update!(completed: false)
+      end
     end
+  rescue => e
+    render json: { error: e.message }, status: :unprocessable_entity
   end
 
   def update_content
@@ -74,8 +82,8 @@ class Api::TodosController < ApplicationController
     @todo = Todo.find(params.expect(:id))
   end
 
-    # Only allow a list of trusted parameters through.
-    def todo_params
-      params.expect(todo: [ :content, :completed, :position ])
-    end
+  # Only allow a list of trusted parameters through.
+  def todo_params
+    params.expect(todo: [ :content, :completed, :position ])
+  end
 end
