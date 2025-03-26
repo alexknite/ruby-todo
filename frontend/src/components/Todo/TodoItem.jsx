@@ -20,6 +20,7 @@ export const TodoItem = ({
   updateContent,
   moveUp,
   moveDown,
+  lastCompleted,
 }) => {
   const [isChecked, setChecked] = useState(completed);
   const [isEditing, toggleEditing] = useState(false);
@@ -50,7 +51,7 @@ export const TodoItem = ({
       updateContent(id, editedContent);
     }
     toggleEditing(false);
-  }
+  };
 
   const handleMoveUp = async () => {
     if (position > 0) {
@@ -84,10 +85,10 @@ export const TodoItem = ({
           exit={{ opacity: 0, x: 20 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          {position !== 0 && (
+          {position > 0 && position !== lastCompleted().position + 1 && (
             <MdKeyboardArrowUp size="40px" onClick={handleMoveUp} />
           )}
-          {position !== (length - 1) && (
+          {position !== length - 1 && (
             <MdKeyboardArrowDown size="40px" onClick={handleMoveDown} />
           )}
         </motion.div>

@@ -12,6 +12,7 @@ export const TodoList = ({
   updateContent,
   moveUp,
   moveDown,
+  lastCompleted,
 }) => {
   return (
     <AnimatePresence>
@@ -37,6 +38,7 @@ export const TodoList = ({
                 updateContent={updateContent}
                 moveUp={moveUp}
                 moveDown={moveDown}
+                lastCompleted={lastCompleted}
               />
             ))}
           </AnimatePresence>

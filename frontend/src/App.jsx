@@ -50,13 +50,18 @@ function App() {
         t.id === id ? { ...t, completed } : t,
       );
 
-      if (completed) {
-        const task = updated.find((t) => t.id === id);
-        updated = updated.filter((t) => t.id !== id);
+      const task = updated.find((t) => t.id === id);
+      updated = updated.filter((t) => t.id !== id);
 
+      if (completed) {
         updated = [
           { ...task, position: 0 },
           ...updated.map((t, i) => ({ ...t, position: i + 1 })),
+        ];
+      } else {
+        updated = [
+          ...updated.map((t, i) => ({ ...t, position: i })),
+          { ...task, position: updated.length },
         ];
       }
 
@@ -77,7 +82,9 @@ function App() {
 
   const moveUp = async (id, newPosition) => {
     if (newPosition < 0) return;
+
     await update_position(id, newPosition);
+
     setTodos((prevTodos) => {
       const updated = [...prevTodos];
       const item1 = updated.find((t) => t.id === id);
@@ -118,6 +125,10 @@ function App() {
       return [...updated];
     });
   };
+  const lastCompleted = () => {
+    const result = [...todos].reverse().find((t) => t.completed);
+    return result ? result : -1;
+  };
   return (
     <div className={styles.App}>
       <div className={styles.container}>
@@ -130,6 +141,7 @@ function App() {
           updateContent={updateContent}
           moveUp={moveUp}
           moveDown={moveDown}
+          lastCompleted={lastCompleted}
         />
       </div>
     </div>
