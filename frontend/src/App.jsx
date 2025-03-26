@@ -34,23 +34,21 @@ function App() {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
+  const updateCompleted = (id, completed) => {
+    setTodos((prevTodos) => {
+      const updated = prevTodos.map((t) =>
+        t.id === id ? { ...t, completed } : t,
+      );
 
-const updateCompleted = (id, completed) => {
-  setTodos((prevTodos) => {
-    const updated = prevTodos.map((t) =>
-      t.id === id ? { ...t, completed } : t
-    );
-
-    // Sort: Completed first, then position
-    return updated.sort((a, b) => {
-      if (a.completed === b.completed) {
-        return a.position - b.position; // Sort by position if completed status is the same
-      }
-      return b.completed - a.completed; // Completed tasks first
+      // Sort: Completed first, then position
+      return updated.sort((a, b) => {
+        if (a.completed === b.completed) {
+          return a.position - b.position; // Sort by position if completed status is the same
+        }
+        return b.completed - a.completed; // Completed tasks first
+      });
     });
-  });
-};
-
+  };
 
   const updateContent = (id, editedContent) => {
     setTodos((prevTodos) => {
@@ -67,17 +65,18 @@ const updateCompleted = (id, completed) => {
     if (newPosition < 0) return;
     await update_position(id, newPosition);
     setTodos((prevTodos) => {
-      const index = prevTodos.findIndex((t) => t.id === id);
-      if (index <= 0) return prevTodos;
       const updated = [...prevTodos];
+      const item1 = updated.find((t) => t.id === id);
+      const index = updated.indexOf(item1);
+      const item2 = updated.find((t) => t.position === newPosition);
 
       [updated[index], updated[index - 1]] = [
         updated[index - 1],
         updated[index],
       ];
 
-      updated[index].position = newPosition;
-      updated[index - 1].position = newPosition + 1;
+      item2.position = item1.position;
+      item1.position = newPosition;
 
       return [...updated];
     });
@@ -87,17 +86,18 @@ const updateCompleted = (id, completed) => {
     if (newPosition >= todos.length) return;
     await update_position(id, newPosition);
     setTodos((prevTodos) => {
-      const index = prevTodos.findIndex((t) => t.id === id);
-      if (index === -1 || index >= prevTodos.length - 1) return prevTodos;
       const updated = [...prevTodos];
+      const item1 = updated.find((t) => t.id === id);
+      const index = updated.indexOf(item1);
+      const item2 = updated.find((t) => t.position === newPosition);
 
       [updated[index], updated[index + 1]] = [
         updated[index + 1],
         updated[index],
       ];
 
-      updated[index].position = updated[index + 1].position;
-      updated[index + 1].position = newPosition;
+      item2.position = item1.position;
+      item1.position = newPosition;
 
       return [...updated];
     });
