@@ -95,11 +95,6 @@ function App() {
       const item1 = updated.find((t) => t.id === id);
       const index = updated.indexOf(item1);
 
-      // if (index >= length - 1) {
-      //   console.log("out of bounds");
-      //   return prevTodos;
-      // }
-
       const item2 = updated.find((t) => t.position === newPosition);
 
       [updated[index], updated[index + 1]] = [
