@@ -78,8 +78,4 @@ class Api::TodosController < ApplicationController
     def todo_params
       params.expect(todo: [ :content, :completed, :position ])
     end
-  # Only allow a list of trusted parameters through.
-  def todo_params
-    params.expect(todo: [ :content, :completed, :position ])
-  end
 end
