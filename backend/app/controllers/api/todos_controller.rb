@@ -48,10 +48,19 @@ class Api::TodosController < ApplicationController
     end
   end
 
-  # DELETE /todos/1
-  def destroy
-    @todo.destroy!
-  end
+
+# DELETE /todos/1
+def destroy
+  todo = Todo.find(params[:id])
+  position_to_remove = todo.position
+  todo.destroy!
+
+  # Shift positions of remaining todos down
+  Todo.where("position > ?", position_to_remove).update_all("position = position - 1")
+
+  render json: { message: "Todo deleted successfully" }, status: :ok
+end
+
 
   def update_position
     todo = Todo.find(params[:id])

@@ -20,7 +20,6 @@ export const TodoItem = ({
   updateContent,
   moveUp,
   moveDown,
-  getTotalCompleted,
 }) => {
   const [isChecked, setChecked] = useState(completed);
   const [isEditing, toggleEditing] = useState(false);

@@ -30,8 +30,18 @@ function App() {
   };
 
   const deleteItem = async (id) => {
-    delete_item(id);
-    setTodos(todos.filter((todo) => todo.id !== id));
+    await delete_item(id);
+    setTodos((prevTodos) => {
+      const deletedTodo = prevTodos.find((todo) => todo.id === id);
+
+      return prevTodos
+        .filter((todo) => todo.id !== id)
+        .map((todo) =>
+          todo.position > deletedTodo.position
+            ? { ...todo, position: todo.position - 1 }
+            : todo,
+        );
+    });
   };
 
   const updateCompleted = (id, completed) => {

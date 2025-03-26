@@ -13,16 +13,6 @@ export const TodoList = ({
   moveUp,
   moveDown,
 }) => {
-  const getTotalCompleted = () => {
-    let totalCompleted = 0;
-    todos.forEach((t) => {
-      if (t.completed) {
-        totalCompleted++;
-      }
-    });
-
-    return totalCompleted;
-  };
   return (
     <AnimatePresence>
       {todos.length > 0 && (
@@ -47,7 +37,6 @@ export const TodoList = ({
                 updateContent={updateContent}
                 moveUp={moveUp}
                 moveDown={moveDown}
-                getTotalCompleted={getTotalCompleted}
               />
             ))}
           </AnimatePresence>
