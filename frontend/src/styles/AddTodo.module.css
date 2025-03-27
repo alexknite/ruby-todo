@@ -1,20 +1,15 @@
 .container {
   margin-top: 20px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: stretch;
   justify-content: center;
   width: 90%;
 }
 
-.addInput {
-  flex: 1;
-  width: 80%;
-  height: 40px;
-}
-
 .formGroup {
   display: flex;
+  flex-direction: column;
   justify-self: center;
   align-self: center;
   position: relative;
@@ -23,9 +18,78 @@
   width: 100%;
 }
 
-.formField {
+.addInput {
+  flex: 1;
+  width: 80%;
+  height: 40px;
+}
+
+.addInputField {
   font-family: inherit;
-  width: 100%;
+  width: 80%;
+  border: 0;
+  border-bottom: 2px solid var(--color-gray);
+  outline: 0;
+  font-size: 1.3rem;
+  color: var(--color-text);
+  padding: 7px 0;
+  margin-bottom: 50px;
+  background: transparent;
+  transition: border-color 0.2s;
+
+  &::placeholder {
+    color: transparent;
+  }
+
+  &:placeholder-shown~.addInputLabel {
+    font-size: 1.3rem;
+    cursor: text;
+    top: 20px;
+  }
+}
+
+.addInputLabel {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: var(--color-gray);
+}
+
+.addInputField:focus {
+  ~.addInputLabel {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+
+  padding-bottom: 6px;
+  border-width: 3px;
+  border-image: linear-gradient(to right, var(--color-primary), var());
+  border-image-slice: 1;
+}
+
+.addInputField {
+
+  &:required,
+  &:invalid {
+    box-shadow: none;
+  }
+}
+
+.tagInput {
+  width: 25%;
+  height: 40px;
+}
+
+.addTagField {
+  font-family: inherit;
+  width: 25%;
   border: 0;
   border-bottom: 2px solid var(--color-gray);
   outline: 0;
@@ -39,39 +103,46 @@
     color: transparent;
   }
 
-  &:placeholder-shown ~ .label {
+  &:placeholder-shown~.addTagLabel {
     font-size: 1.3rem;
     cursor: text;
-    top: 20px;
+    top: 110px;
   }
 }
 
-.label {
+.addTagLabel {
   position: absolute;
-  top: 0;
+    top: 110px;
   display: block;
   transition: 0.2s;
   font-size: 1rem;
   color: var(--color-gray);
 }
 
-.formField:focus {
-  ~ .label {
+.addTagField:focus {
+  ~.addTagLabel {
     position: absolute;
-    top: 0;
+    top: 90px;
     display: block;
     transition: 0.2s;
     font-size: 1rem;
     color: var(--color-primary);
-    font-weight:700;    
+    font-weight: 700;
   }
-  padding-bottom: 6px;  
+
+  padding-bottom: 6px;
   border-width: 3px;
   border-image: linear-gradient(to right, var(--color-primary), var());
   border-image-slice: 1;
 }
 
-.formField{
-  &:required,&:invalid { box-shadow:none; }
+.addTagField {
+
+  &:required,
+  &:invalid {
+    box-shadow: none;
+  }
 }
+
+
 

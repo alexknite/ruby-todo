@@ -5,6 +5,7 @@ import {
   create_item,
   delete_item,
   update_position,
+  get_tags,
 } from "./api/endpoints";
 
 import styles from "./styles/App.module.css";
@@ -15,6 +16,7 @@ import { AddTodo } from "./components/Todo/AddTodo";
 
 function App() {
   const [todos, setTodos] = useState([]);
+  const [tags, setTags] = useState([]);
 
   useEffect(() => {
     const fetchTodos = async () => {
@@ -125,15 +127,25 @@ function App() {
       return [...updated];
     });
   };
+
   const lastCompleted = () => {
     const result = [...todos].reverse().find((t) => t.completed);
     return result ? result : -1;
   };
+
+  useEffect(() => {
+    const fetchTags = async () => {
+      const tags = await get_tags();
+      setTags(tags);
+    };
+    fetchTags();
+  }, []);
+  
   return (
     <div className={styles.App}>
       <div className={styles.container}>
         <Header />
-        <AddTodo createItem={createItem} />
+        <AddTodo createItem={createItem} tags={tags} />
         <TodoList
           todos={todos}
           deleteItem={deleteItem}
