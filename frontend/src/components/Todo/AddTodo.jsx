@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 
+import { create_tag, destroy_tag } from "../../api/endpoints.js";
+
 import styles from "../../styles/AddTodo.module.css";
 
 import { TagOptionList } from "../Tag/TagOptionList";
 import { SelectedTagList } from "../Tag/SelectedTagList";
 
-export const AddTodo = ({ createItem, tags }) => {
+export const AddTodo = ({ createItem, tags, setTags }) => {
   const [input, setInput] = useState("");
   const [tagInput, setTagInput] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
@@ -24,14 +26,38 @@ export const AddTodo = ({ createItem, tags }) => {
     name.toLowerCase().includes(tagInput.toLowerCase()),
   );
 
-  const removeSelectedTag = (tag_id) => {
+  const selectTag = (id, name) => {
+    setSelectedTags([
+      ...selectedTags,
+      {
+        id: id,
+        name: name,
+      },
+    ]);
+    setTagInput("");
+  };
+
+  const removeSelectedTag = (id) => {
     setSelectedTags((prevSelectedTags) => {
-      return [...prevSelectedTags].filter((t) => t.tag_id !== tag_id);
+      return [...prevSelectedTags].filter((t) => t.id !== id);
     });
   };
 
   const handleEnterTag = (e) => {
     setTagInput(e.target.value);
+  };
+
+  const createTag = async (name) => {
+    const newTag = await create_tag(name);
+    selectTag(newTag.id, newTag.name);
+  };
+
+  const destroyTag = async (id) => {
+    await destroy_tag(id);
+    removeSelectedTag(id);
+    setTags((prevTags) => {
+      return prevTags.filter((t) => t.id !== id);
+    });
   };
 
   return (
@@ -65,15 +91,21 @@ export const AddTodo = ({ createItem, tags }) => {
         <SelectedTagList
           selectedTags={selectedTags}
           removeSelectedTag={removeSelectedTag}
+          destroyTag={destroyTag}
         />
       </form>
-      <TagOptionList
-        tagInput={tagInput}
-        filteredTags={filteredTags}
-        setTagInput={setTagInput}
-        selectedTags={selectedTags}
-        setSelectedTags={setSelectedTags}
-      />
+      {tagInput && (
+        <TagOptionList
+          tags={tags}
+          tagInput={tagInput}
+          filteredTags={filteredTags}
+          setTagInput={setTagInput}
+          selectedTags={selectedTags}
+          setSelectedTags={setSelectedTags}
+          createTag={createTag}
+          selectTag={selectTag}
+        />
+      )}
     </div>
   );
 };

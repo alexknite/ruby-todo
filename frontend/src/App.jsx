@@ -26,6 +26,14 @@ function App() {
     fetchTodos();
   }, []);
 
+  useEffect(() => {
+    const fetchTags = async () => {
+      const tags = await get_tags();
+      setTags(tags);
+    };
+    fetchTags();
+  }, []);
+
   const createItem = async (content) => {
     const todo = await create_item(content, todos.length);
     setTodos([...todos, todo]);
@@ -133,19 +141,11 @@ function App() {
     return result ? result : -1;
   };
 
-  useEffect(() => {
-    const fetchTags = async () => {
-      const tags = await get_tags();
-      setTags(tags);
-    };
-    fetchTags();
-  }, []);
-  
   return (
     <div className={styles.App}>
       <div className={styles.container}>
         <Header />
-        <AddTodo createItem={createItem} tags={tags} />
+        <AddTodo createItem={createItem} tags={tags} setTags={setTags} />
         <TodoList
           todos={todos}
           deleteItem={deleteItem}

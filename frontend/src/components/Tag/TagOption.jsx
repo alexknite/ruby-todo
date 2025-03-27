@@ -1,15 +1,8 @@
 import React from "react";
 
-export const TagOption = ({
-  id,
-  name,
-  setTagInput,
-  setSelectedTags,
-  selectedTags,
-}) => {
+export const TagOption = ({ id, name, selectTag }) => {
   const handleSelectTag = () => {
-    setSelectedTags([...selectedTags, { tag_name: name, tag_id: id }]);
-    setTagInput("");
+    selectTag(id, name);
   };
 
   return <li onClick={handleSelectTag}>{name}</li>;
