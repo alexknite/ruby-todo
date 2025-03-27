@@ -15,6 +15,7 @@ export const TodoItem = ({
   position,
   content,
   completed,
+  tags,
   deleteItem,
   updateCompleted,
   updateContent,
@@ -113,6 +114,8 @@ export const TodoItem = ({
           </form>
         ) : (
           <AnimatePresence>
+            {tags &&
+              tags.map(({ id, name }) => <p key={`tag-${id}`}>{name}</p>)}
             <motion.input
               key={id}
               id={`checkbox-${id}`}
@@ -124,6 +127,7 @@ export const TodoItem = ({
               exit={{ opacity: 0, x: 20 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
             />
+
             <motion.label
               htmlFor={`checkbox-${id}`}
               className={styles.itemName}

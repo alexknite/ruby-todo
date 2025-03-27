@@ -83,20 +83,26 @@ export const AddTodo = ({
           <label htmlFor="input" className={styles.addInputLabel}>
             Add Item
           </label>
-          <button type="submit">Submit</button>
         </div>
-        <input
-          type="text"
-          id="tags"
-          name="tags"
-          className={`${styles.addTagField} ${styles.tagInput}`}
-          value={tagInput}
-          placeholder="Type something..."
-          onChange={handleEnterTag}
-        />
-        <label htmlFor="tags" className={styles.addTagLabel}>
-          Add Tag
-        </label>
+        <div className={styles.tagContainer}>
+          <div className={styles.tagInputContainer}>
+            <input
+              type="text"
+              id="tags"
+              name="tags"
+              className={`${styles.addTagField} ${styles.tagInput}`}
+              value={tagInput}
+              placeholder="Type something..."
+              onChange={handleEnterTag}
+            />
+            <label htmlFor="tags" className={styles.addTagLabel}>
+              Add Tag
+            </label>
+          </div>
+          <div className={styles.submitContainer}>
+            <button className={styles.submitBtn} type="submit">Submit</button>
+          </div>
+        </div>
         <SelectedTagList
           selectedTags={selectedTags}
           removeSelectedTag={removeSelectedTag}

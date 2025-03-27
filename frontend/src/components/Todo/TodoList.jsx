@@ -25,14 +25,11 @@ export const TodoList = ({
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
           <AnimatePresence mode="popLayout">
-            {todos.map(({ id, content, completed, position }) => (
+            {todos.map((todo) => (
               <TodoItem
+                {...todo}
                 length={todos.length}
-                key={id}
-                id={id}
-                position={position}
-                content={content}
-                completed={completed}
+                key={todo.id}
                 deleteItem={deleteItem}
                 updateCompleted={updateCompleted}
                 updateContent={updateContent}

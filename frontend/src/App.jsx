@@ -37,17 +37,19 @@ function App() {
 
   const createItem = async (content, selectedTags) => {
     const todo = await create_item(content, todos.length);
-    if (selectedTags.length > 0) {
-      selectedTags.forEach(async (tag) => {
-        await add_tag(todo.id, tag.id);
 
-        if (!todo.tags) todo.tags = [];
-        const prevTags = todo.tags;
-        todo.tags = [...prevTags, {id: tag.id, name: tag.name}];
-        
-      });
+    if (selectedTags.length > 0) {
+      await Promise.all(
+        selectedTags.map(async (tag) => {
+          await add_tag(todo.id, tag.id);
+        }),
+      );
+
+      const updatedTodo = { ...todo, tags: selectedTags };
+      setTodos([...todos, updatedTodo]);
+    } else {
+      setTodos([...todos, todo]);
     }
-    setTodos([...todos, todo]);
   };
 
   const deleteItem = async (id) => {
