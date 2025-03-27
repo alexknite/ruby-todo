@@ -18,6 +18,11 @@
   width: 100%;
 }
 
+.inputContainer {
+  display: flex;
+  flex-direction: row;
+}
+
 .addInput {
   flex: 1;
   width: 80%;

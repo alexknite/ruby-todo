@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     end
 
     resources :tags, only: [ :index, :create ]
+    resources :todo_tags, only: [ :create, :destroy ]
 
     delete "todo_tags", to: "todo_tags#destroy"
     delete "tags/:id", to: "tags#destroy", as: "delete_tag"

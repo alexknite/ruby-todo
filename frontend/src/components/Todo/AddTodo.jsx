@@ -7,7 +7,13 @@ import styles from "../../styles/AddTodo.module.css";
 import { TagOptionList } from "../Tag/TagOptionList";
 import { SelectedTagList } from "../Tag/SelectedTagList";
 
-export const AddTodo = ({ createItem, tags, setTags }) => {
+export const AddTodo = ({
+  createItem,
+  tags,
+  setTags,
+  // selectedTags,
+  // setSelectedTags,
+}) => {
   const [input, setInput] = useState("");
   const [tagInput, setTagInput] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
@@ -15,7 +21,7 @@ export const AddTodo = ({ createItem, tags, setTags }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (input.trim() !== "") {
-      createItem(input);
+      createItem(input, selectedTags);
       setInput("");
       setTagInput("");
       setSelectedTags([]);
@@ -63,19 +69,22 @@ export const AddTodo = ({ createItem, tags, setTags }) => {
   return (
     <div className={styles.container}>
       <form className={styles.formGroup} onSubmit={handleSubmit}>
-        <input
-          type="text"
-          className={`${styles.addInputField} ${styles.addInput}`}
-          id="input"
-          name="input"
-          placeholder="Type something..."
-          value={input}
-          autoFocus
-          onChange={(e) => setInput(e.target.value)}
-        />
-        <label htmlFor="input" className={styles.addInputLabel}>
-          Add Item
-        </label>
+        <div className={styles.inputContainer}>
+          <input
+            type="text"
+            className={`${styles.addInputField} ${styles.addInput}`}
+            id="input"
+            name="input"
+            placeholder="Type something..."
+            value={input}
+            autoFocus
+            onChange={(e) => setInput(e.target.value)}
+          />
+          <label htmlFor="input" className={styles.addInputLabel}>
+            Add Item
+          </label>
+          <button type="submit">Submit</button>
+        </div>
         <input
           type="text"
           id="tags"

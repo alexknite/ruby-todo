@@ -6,6 +6,7 @@ import {
   delete_item,
   update_position,
   get_tags,
+  add_tag,
 } from "./api/endpoints";
 
 import styles from "./styles/App.module.css";
@@ -34,8 +35,18 @@ function App() {
     fetchTags();
   }, []);
 
-  const createItem = async (content) => {
+  const createItem = async (content, selectedTags) => {
     const todo = await create_item(content, todos.length);
+    if (selectedTags.length > 0) {
+      selectedTags.forEach(async (tag) => {
+        await add_tag(todo.id, tag.id);
+
+        if (!todo.tags) todo.tags = [];
+        const prevTags = todo.tags;
+        todo.tags = [...prevTags, {id: tag.id, name: tag.name}];
+        
+      });
+    }
     setTodos([...todos, todo]);
   };
 
@@ -145,7 +156,13 @@ function App() {
     <div className={styles.App}>
       <div className={styles.container}>
         <Header />
-        <AddTodo createItem={createItem} tags={tags} setTags={setTags} />
+        <AddTodo
+          createItem={createItem}
+          tags={tags}
+          setTags={setTags}
+          // selectedTags={selectedTags}
+          // setSelectedTags={setSelectedTags}
+        />
         <TodoList
           todos={todos}
           deleteItem={deleteItem}
