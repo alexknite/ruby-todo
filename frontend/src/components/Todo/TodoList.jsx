@@ -29,7 +29,7 @@ export const TodoList = ({
               <TodoItem
                 {...todo}
                 length={todos.length}
-                key={todo.id}
+                key={`TodoItem-${todo.id}`}
                 deleteItem={deleteItem}
                 updateCompleted={updateCompleted}
                 updateContent={updateContent}

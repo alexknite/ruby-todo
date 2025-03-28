@@ -11,8 +11,6 @@ export const AddTodo = ({
   createItem,
   tags,
   setTags,
-  // selectedTags,
-  // setSelectedTags,
 }) => {
   const [input, setInput] = useState("");
   const [tagInput, setTagInput] = useState("");

@@ -162,8 +162,6 @@ function App() {
           createItem={createItem}
           tags={tags}
           setTags={setTags}
-          // selectedTags={selectedTags}
-          // setSelectedTags={setSelectedTags}
         />
         <TodoList
           todos={todos}

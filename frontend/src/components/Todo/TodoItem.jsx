@@ -70,7 +70,6 @@ export const TodoItem = ({
 
   return (
     <motion.div
-      key={id}
       className={styles.container}
       layout
       initial={{ opacity: 0, y: -20 }}
@@ -113,11 +112,12 @@ export const TodoItem = ({
             </AnimatePresence>
           </form>
         ) : (
-          <AnimatePresence>
-            {tags &&
-              tags.map(({ id, name }) => <p key={`tag-${id}`}>{name}</p>)}
+          <div>
+            <ul>
+              {tags &&
+                tags.map((tag) => <p key={`Tag-${tag.id}`}>{tag.name}</p>)}
+            </ul>
             <motion.input
-              key={id}
               id={`checkbox-${id}`}
               type="checkbox"
               checked={isChecked}
@@ -138,7 +138,7 @@ export const TodoItem = ({
             >
               {content}
             </motion.label>
-          </AnimatePresence>
+          </div>
         )}
       </div>
 

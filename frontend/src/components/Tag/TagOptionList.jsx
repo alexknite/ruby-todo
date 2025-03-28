@@ -18,11 +18,9 @@ export const TagOptionList = ({
       <CreateTag tags={tags} tagInput={tagInput} createTag={createTag} />
       {tagInput &&
         filteredTags &&
-        filteredTags.map(({ id, name }) => (
+        filteredTags.map((tag) => (
           <TagOption
-            key={id}
-            id={id}
-            name={name}
+            key={`TagOption-${tag.id}`}
             setTagInput={setTagInput}
             setSelectedTags={setSelectedTags}
             selectedTags={selectedTags}

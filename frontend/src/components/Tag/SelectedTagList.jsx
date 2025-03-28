@@ -10,11 +10,10 @@ export const SelectedTagList = ({
   return (
     <ul>
       {selectedTags &&
-        selectedTags.map(({ id, name }) => (
+        selectedTags.map((tag) => (
           <SelectedTag
-            key={`selected-${id}`}
-            id={id}
-            name={name}
+            {...tag}
+            key={`SelectedTag-${tag.id}`}
             removeSelectedTag={removeSelectedTag}
             destroyTag={destroyTag}
           />
