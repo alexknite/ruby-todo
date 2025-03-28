@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import { TodoItem } from "./TodoItem";
 
-import styles from "../../styles/TodoList.module.css";
+import styles from "../../styles/Todo/TodoList.module.css";
 
 export const TodoList = ({
   todos,

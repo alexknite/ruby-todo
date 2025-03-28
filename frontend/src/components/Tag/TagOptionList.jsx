@@ -3,6 +3,8 @@ import React from "react";
 import { TagOption } from "../Tag/TagOption";
 import { CreateTag } from "./CreateTag";
 
+import styles from '../../styles/Tag/TagOptionList.module.css';
+
 export const TagOptionList = ({
   tags,
   tagInput,
@@ -13,7 +15,7 @@ export const TagOptionList = ({
     name.toLowerCase().includes(tagInput.toLowerCase()),
   );
   return (
-    <ul>
+    <ul className={styles.tagOptions}>
       <CreateTag tags={tags} tagInput={tagInput} createTag={createTag} />
       {tagInput &&
         filteredTags &&

@@ -13,7 +13,7 @@ import styles from "./styles/App.module.css";
 
 import { Header } from "./components/Header";
 import { TodoList } from "./components/Todo/TodoList";
-import { AddTodo } from "./components/Todo/AddTodo";
+import { AddTodo } from "./components/AddTodo";
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -162,6 +162,7 @@ function App() {
           createItem={createItem}
           tags={tags}
           setTags={setTags}
+          setTodos={setTodos}
         />
         <TodoList
           todos={todos}

@@ -2,13 +2,14 @@ import React from "react";
 
 import { SelectedTag } from "./SelectedTag";
 
+import styles from '../../styles/Tag/SelectedTagList.module.css'
 export const SelectedTagList = ({
   selectedTags,
   removeSelectedTag,
   destroyTag,
 }) => {
   return (
-    <ul>
+    <ul className={styles.container}>
       {selectedTags &&
         selectedTags.map((tag) => (
           <SelectedTag

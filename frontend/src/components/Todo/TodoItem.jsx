@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import { update_complete, update_content } from "../../api/endpoints";
 
-import styles from "../../styles/TodoItem.module.css";
+import styles from "../../styles/Todo/TodoItem.module.css";
 
 export const TodoItem = ({
   length,

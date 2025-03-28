@@ -1,31 +1,34 @@
 import React from "react";
 
-import styles from "../../styles/SelectedTag.module.css";
+import { IoIosRemoveCircle } from "react-icons/io";
+import { IoTrash } from "react-icons/io5";
 
-export const SelectedTag = ({ id, name, removeSelectedTag, destroyTag}) => {
+import styles from "../../styles/Tag/SelectedTag.module.css";
+
+export const SelectedTag = ({ id, name, removeSelectedTag, destroyTag }) => {
   const handleRemoveSelectedTag = () => {
     removeSelectedTag(id);
   };
   const handleDestroyTag = () => {
     destroyTag(id);
-  }
+  };
   return (
     <div className={styles.container}>
       <li className={styles.tag} key={`tag-${id}`}>
-        {name}
+        <p>{name}</p>
+        <div className={styles.btnContainer}>
+          <IoIosRemoveCircle
+            size="30px"
+            id={`removeBtn-${id}`}
+            onClick={handleRemoveSelectedTag}
+          />
+          <IoTrash
+            size="30px"
+            id={`destroyBtn-${id}`}
+            onClick={handleDestroyTag}
+          />
+        </div>
       </li>
-      <button
-        id={`removeBtn-${id}`}
-        className={styles.removeBtn}
-        onClick={handleRemoveSelectedTag}
-      >
-        X
-      </button>
-      <button
-        id={`destroyBtn-${id}`}
-        className={styles.destroyBtn}
-        onClick={handleDestroyTag}
-      >Trash</button>
     </div>
   );
 };

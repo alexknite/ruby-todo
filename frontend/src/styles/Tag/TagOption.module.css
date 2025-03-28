@@ -1,8 +1,7 @@
-@import "vars.css";
-
 .tag {
+  width: 40%;
   padding: 5px;
-  text-decoration: none;
   background-color: var(--color-tags);
   border-radius: 10px;
+  text-align: center;
 }
