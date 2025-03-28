@@ -4,4 +4,9 @@
   background-color: var(--color-tags);
   border-radius: 10px;
   text-align: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.tag:hover {
+  transform: scale(1.1);
 }

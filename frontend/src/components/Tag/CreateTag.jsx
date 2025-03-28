@@ -1,9 +1,9 @@
 import React from "react";
 
-
 import styles from "../../styles/Tag/CreateTag.module.css";
 
 export const CreateTag = ({ tagInput, tags, createTag }) => {
+
   const handleCreateTag = () => {
     createTag(tagInput);
   };
@@ -15,7 +15,10 @@ export const CreateTag = ({ tagInput, tags, createTag }) => {
     <>
       {!tagExists && (
         <div className={styles.container}>
-          <li className={styles.createTag} onClick={handleCreateTag}>
+          <li
+            className={styles.createTag}
+            onClick={handleCreateTag}
+          >
             {tagInput}
           </li>
         </div>

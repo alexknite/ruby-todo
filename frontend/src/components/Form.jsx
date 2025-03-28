@@ -2,7 +2,13 @@ import React from "react";
 
 import styles from "../styles/Form.module.css";
 
-export const Form = ({ input, tagInput, setInput, setTagInput, submitForm }) => {
+export const Form = ({
+  input,
+  tagInput,
+  setInput,
+  setTagInput,
+  submitForm,
+}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     submitForm();
@@ -26,21 +32,19 @@ export const Form = ({ input, tagInput, setInput, setTagInput, submitForm }) => 
         </label>
       </div>
       <div className={styles.tagContainer}>
-        <div className={styles.tagInputContainer}>
-          <input
-            type="text"
-            maxLength={19}
-            id="tags"
-            name="tags"
-            className={`${styles.addTagField} ${styles.tagInput}`}
-            value={tagInput}
-            placeholder=""
-            onChange={(e) => setTagInput(e.target.value)}
-          />
-          <label htmlFor="tags" className={styles.addTagLabel}>
-            Add Tag
-          </label>
-        </div>
+        <input
+          type="text"
+          maxLength={19}
+          id="tags"
+          name="tags"
+          className={`${styles.addTagField} ${styles.tagInput}`}
+          value={tagInput}
+          placeholder=""
+          onChange={(e) => setTagInput(e.target.value)}
+        />
+        <label htmlFor="tags" className={styles.addTagLabel}>
+          Add Tag
+        </label>
         <div className={styles.submitContainer}>
           <button className={styles.submitBtn} type="submit">
             Submit

@@ -1,3 +1,5 @@
+@import "../vars.css";
+
 .container {
   display: flex;
   width: 100%;
@@ -16,4 +18,9 @@
   border-radius: 10px;
   text-align: center;
   white-space: nowrap;
+  transition: transform 0.3s ease-in-out;
+}
+
+.createTag:hover {
+  transform: scale(1.1);
 }
