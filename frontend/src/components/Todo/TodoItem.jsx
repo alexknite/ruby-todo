@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { Tag } from "../Tag/Tag";
+
 import { LiaEdit } from "react-icons/lia";
 import { IoTrash } from "react-icons/io5";
 import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
@@ -112,10 +114,10 @@ export const TodoItem = ({
             </AnimatePresence>
           </form>
         ) : (
-          <div>
-            <ul>
+          <div className={styles.content}>
+            <ul className={styles.tagsContainer}>
               {tags &&
-                tags.map((tag) => <p key={`Tag-${tag.id}`}>{tag.name}</p>)}
+                tags.map((tag) => <Tag {...tag} key={`Tag-${tag.id}`} />)}
             </ul>
             <motion.input
               id={`checkbox-${id}`}

@@ -1,0 +1,8 @@
+@import "vars.css";
+
+.tag {
+  padding: 5px;
+  text-decoration: none;
+  background-color: var(--color-tags);
+  border-radius: 10px;
+}

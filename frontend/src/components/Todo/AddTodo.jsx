@@ -26,10 +26,6 @@ export const AddTodo = ({
     }
   };
 
-  const filteredTags = tags.filter(({ name }) =>
-    name.toLowerCase().includes(tagInput.toLowerCase()),
-  );
-
   const selectTag = (id, name) => {
     setSelectedTags([
       ...selectedTags,
@@ -111,10 +107,6 @@ export const AddTodo = ({
         <TagOptionList
           tags={tags}
           tagInput={tagInput}
-          filteredTags={filteredTags}
-          setTagInput={setTagInput}
-          selectedTags={selectedTags}
-          setSelectedTags={setSelectedTags}
           createTag={createTag}
           selectTag={selectTag}
         />

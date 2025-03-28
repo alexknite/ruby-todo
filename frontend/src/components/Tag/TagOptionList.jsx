@@ -6,13 +6,12 @@ import { CreateTag } from "./CreateTag";
 export const TagOptionList = ({
   tags,
   tagInput,
-  filteredTags,
-  setTagInput,
-  setSelectedTags,
-  selectedTags,
   createTag,
   selectTag,
 }) => {
+    const filteredTags = tags.filter(({ name }) =>
+    name.toLowerCase().includes(tagInput.toLowerCase()),
+  );
   return (
     <ul>
       <CreateTag tags={tags} tagInput={tagInput} createTag={createTag} />
@@ -20,10 +19,8 @@ export const TagOptionList = ({
         filteredTags &&
         filteredTags.map((tag) => (
           <TagOption
+            {...tag}
             key={`TagOption-${tag.id}`}
-            setTagInput={setTagInput}
-            setSelectedTags={setSelectedTags}
-            selectedTags={selectedTags}
             selectTag={selectTag}
           />
         ))}
