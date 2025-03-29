@@ -1,7 +1,17 @@
 @import "../vars.css";
 
+.container {
+  position: relative;
+}
+
 .tag {
+  position: relative;
   padding: 6px;
   background-color: var(--color-tags);
   border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.tag:hover {
+  transform: scale(1.1);
 }

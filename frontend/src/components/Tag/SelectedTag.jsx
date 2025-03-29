@@ -6,12 +6,6 @@ import { IoTrash } from "react-icons/io5";
 import styles from "../../styles/Tag/SelectedTag.module.css";
 
 export const SelectedTag = ({ id, name, removeSelectedTag, destroyTag }) => {
-  const handleRemoveSelectedTag = () => {
-    removeSelectedTag(id);
-  };
-  const handleDestroyTag = () => {
-    destroyTag(id);
-  };
   return (
     <div className={styles.container}>
       <li className={styles.tag} key={`tag-${id}`}>
@@ -20,12 +14,12 @@ export const SelectedTag = ({ id, name, removeSelectedTag, destroyTag }) => {
           <IoIosRemoveCircle
             size="30px"
             id={`removeBtn-${id}`}
-            onClick={handleRemoveSelectedTag}
+            onClick={() => removeSelectedTag(id)}
           />
           <IoTrash
             size="30px"
             id={`destroyBtn-${id}`}
-            onClick={handleDestroyTag}
+            onClick={() => destroyTag(id)}
           />
         </div>
       </li>

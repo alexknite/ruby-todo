@@ -1,0 +1,26 @@
+@import "../vars.css";
+
+.container {
+  display: flex;
+  flex-direction: row;
+  gap:8px;
+  position: absolute;
+  transform: translateX(-15%);
+  bottom: 100%;
+  margin: 20px 0;
+  padding: 20px;
+  background-color: var(--color-settings-bg);
+  border-radius: 5px;
+}
+
+input {
+ border:0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 2px solid var(--color-settings-input);
+}
+
+.btnContainer {
+  display: flex;
+  flex-direction: row;
+}
