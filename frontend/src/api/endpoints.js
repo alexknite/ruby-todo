@@ -56,6 +56,7 @@ const POST_ADD_TAG_URL = `${BASE_URL}todo_tags`;
 const DELETE_REMOVE_TAG_URL = (todo_id, tag_id) =>
   `${BASE_URL}todo_tags?todo_id=${todo_id}&tag_id=${tag_id}`;
 const DELETE_DESTROY_TAG_URL = (id) => `${BASE_URL}tags/${id}`;
+const UPDATE_TAG_NAME_URL = (id) => `${BASE_URL}tags/${id}/update_name`;
 
 export const get_tags = async () => {
   const res = await axios.get(GET_TAGS_URL);
@@ -84,5 +85,12 @@ export const remove_tag = async (todo_id, tag_id) => {
 
 export const destroy_tag = async (id) => {
   const res = await axios.delete(DELETE_DESTROY_TAG_URL(id));
+  return res.data;
+};
+
+export const update_name = async (id, name) => {
+  const res = await axios.patch(UPDATE_TAG_NAME_URL(id), {
+    name: name,
+  });
   return res.data;
 };

@@ -188,6 +188,24 @@ function App() {
       return [...prevTodos];
     });
   };
+
+  const updateTagName = async (id, editedTagName) => {
+    setTags((prevTags) =>
+      prevTags.map((tag) =>
+        tag.id === id ? { ...tag, name: editedTagName } : tag,
+      ),
+    );
+
+    setTodos((prevTodos) =>
+      prevTodos.map((todo) => ({
+        ...todo,
+        tags: todo.tags.map((tag) =>
+          tag.id === id ? { ...tag, name: editedTagName } : tag,
+        ),
+      })),
+    );
+  };
+
   return (
     <div className={styles.App}>
       <div className={styles.container}>
@@ -212,6 +230,7 @@ function App() {
           lastCompleted={lastCompleted}
           destroyTag={destroyTag}
           removeTag={removeTag}
+          updateTagName={updateTagName}
         />
       </div>
     </div>

@@ -3,7 +3,14 @@ import React, { useState } from "react";
 import styles from "../../styles/Tag/Tag.module.css";
 import { TagSettings } from "./TagSettings";
 
-export const Tag = ({ tagId, todoId, name, destroyTag, removeTag }) => {
+export const Tag = ({
+  tagId,
+  todoId,
+  name,
+  destroyTag,
+  removeTag,
+  updateTagName,
+}) => {
   const [showSettings, setShowSettings] = useState(false);
 
   return (
@@ -16,6 +23,7 @@ export const Tag = ({ tagId, todoId, name, destroyTag, removeTag }) => {
           setShowSettings={setShowSettings}
           destroyTag={destroyTag}
           removeTag={removeTag}
+          updateTagName={updateTagName}
         />
       )}
       <li

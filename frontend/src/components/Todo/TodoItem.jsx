@@ -26,6 +26,7 @@ export const TodoItem = ({
   lastCompleted,
   destroyTag,
   removeTag,
+  updateTagName,
 }) => {
   const [isChecked, setChecked] = useState(completed);
   const [isEditing, toggleEditing] = useState(false);
@@ -127,6 +128,7 @@ export const TodoItem = ({
                     todoId={id}
                     destroyTag={destroyTag}
                     removeTag={removeTag}
+                    updateTagName={updateTagName}
                   />
                 ))}
             </ul>

@@ -15,6 +15,7 @@ export const TodoList = ({
   lastCompleted,
   destroyTag,
   removeTag,
+  updateTagName,
 }) => {
   return (
     <AnimatePresence>
@@ -40,6 +41,7 @@ export const TodoList = ({
                 lastCompleted={lastCompleted}
                 destroyTag={destroyTag}
                 removeTag={removeTag}
+                updateTagName={updateTagName}
               />
             ))}
           </AnimatePresence>

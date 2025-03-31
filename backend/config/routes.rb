@@ -8,7 +8,11 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :tags, only: [ :index, :create ]
+    resources :tags do
+      member do
+        patch :update_name
+      end
+    end
     resources :todo_tags, only: [ :create, :destroy ]
 
     delete "todo_tags", to: "todo_tags#destroy"
