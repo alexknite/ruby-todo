@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { create_tag, destroy_tag } from "./../api/endpoints.js";
+import { create_tag } from "./../api/endpoints.js";
 
 import styles from "./../styles/Todo/AddTodo.module.css";
 
@@ -8,10 +8,17 @@ import { Form } from "./Form.jsx";
 import { TagOptionList } from "./Tag/TagOptionList";
 import { SelectedTagList } from "./Tag/SelectedTagList";
 
-export const AddTodo = ({ tags, setTodos, createItem, setTags }) => {
+export const AddTodo = ({
+  tags,
+  selectedTags,
+  setSelectedTags,
+  removeSelectedTag,
+  destroyTag,
+  createItem,
+  setTags,
+}) => {
   const [input, setInput] = useState("");
   const [tagInput, setTagInput] = useState("");
-  const [selectedTags, setSelectedTags] = useState([]);
 
   const selectTag = (id, name) => {
     setSelectedTags([
@@ -24,31 +31,10 @@ export const AddTodo = ({ tags, setTodos, createItem, setTags }) => {
     setTagInput("");
   };
 
-  const removeSelectedTag = (id) => {
-    setSelectedTags((prevSelectedTags) => {
-      return [...prevSelectedTags].filter((t) => t.id !== id);
-    });
-  };
-
   const createTag = async (name) => {
     const newTag = await create_tag(name);
     setTags((prevTags) => [...prevTags, newTag]);
     selectTag(newTag.id, newTag.name);
-  };
-
-  const destroyTag = async (id) => {
-    await destroy_tag(id);
-    removeSelectedTag(id);
-    setTags((prevTags) => {
-      return prevTags.filter((t) => t.id !== id);
-    });
-    setTodos((prevTodos) => {
-      prevTodos.forEach((todo) => {
-        const updatedTags = todo.tags.filter((tag) => tag.id !== id);
-        todo.tags = updatedTags;
-      });
-      return [...prevTodos];
-    });
   };
 
   const submitForm = () => {

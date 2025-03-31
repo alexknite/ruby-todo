@@ -24,6 +24,8 @@ export const TodoItem = ({
   moveUp,
   moveDown,
   lastCompleted,
+  destroyTag,
+  removeTag,
 }) => {
   const [isChecked, setChecked] = useState(completed);
   const [isEditing, toggleEditing] = useState(false);
@@ -117,7 +119,16 @@ export const TodoItem = ({
           <div className={styles.content}>
             <ul className={styles.tagsContainer}>
               {tags &&
-                tags.map((tag) => <Tag {...tag} key={`Tag-${tag.id}`} />)}
+                tags.map((tag) => (
+                  <Tag
+                    key={`Tag-${tag.id}`}
+                    tagId={tag.id}
+                    name={tag.name}
+                    todoId={id}
+                    destroyTag={destroyTag}
+                    removeTag={removeTag}
+                  />
+                ))}
             </ul>
             <motion.input
               id={`checkbox-${id}`}

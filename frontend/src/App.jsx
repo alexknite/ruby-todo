@@ -7,6 +7,8 @@ import {
   update_position,
   get_tags,
   add_tag,
+  destroy_tag,
+  remove_tag,
 } from "./api/endpoints";
 
 import styles from "./styles/App.module.css";
@@ -18,6 +20,7 @@ import { AddTodo } from "./components/AddTodo";
 function App() {
   const [todos, setTodos] = useState([]);
   const [tags, setTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
 
   useEffect(() => {
     const fetchTodos = async () => {
@@ -153,7 +156,38 @@ function App() {
     const result = [...todos].reverse().find((t) => t.completed);
     return result ? result : -1;
   };
+  const removeSelectedTag = (id) => {
+    setSelectedTags((prevSelectedTags) => {
+      return [...prevSelectedTags].filter((t) => t.id !== id);
+    });
+  };
 
+  const destroyTag = async (id) => {
+    await destroy_tag(id);
+    removeSelectedTag(id);
+    setTags((prevTags) => {
+      return prevTags.filter((t) => t.id !== id);
+    });
+    setTodos((prevTodos) => {
+      if (prevTodos.length > 0) {
+        prevTodos.forEach((todo) => {
+          const updatedTags = todo.tags.filter((tag) => tag.id !== id);
+          todo.tags = updatedTags;
+        });
+      }
+      return [...prevTodos];
+    });
+  };
+
+  const removeTag = async (todo_id, tag_id) => {
+    await remove_tag(todo_id, tag_id);
+    setTodos((prevTodos) => {
+      const updatedTodo = prevTodos.find((t) => t.id === todo_id);
+      const updatedTags = updatedTodo.tags.filter((t) => t.id !== tag_id);
+      updatedTodo.tags = updatedTags;
+      return [...prevTodos];
+    });
+  };
   return (
     <div className={styles.App}>
       <div className={styles.container}>
@@ -163,6 +197,10 @@ function App() {
           tags={tags}
           setTags={setTags}
           setTodos={setTodos}
+          selectedTags={selectedTags}
+          setSelectedTags={setSelectedTags}
+          removeSelectedTag={removeSelectedTag}
+          destroyTag={destroyTag}
         />
         <TodoList
           todos={todos}
@@ -172,6 +210,8 @@ function App() {
           moveUp={moveUp}
           moveDown={moveDown}
           lastCompleted={lastCompleted}
+          destroyTag={destroyTag}
+          removeTag={removeTag}
         />
       </div>
     </div>

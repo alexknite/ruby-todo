@@ -3,15 +3,25 @@ import React, { useState } from "react";
 import styles from "../../styles/Tag/Tag.module.css";
 import { TagSettings } from "./TagSettings";
 
-export const Tag = ({ id, name }) => {
+export const Tag = ({ tagId, todoId, name, destroyTag, removeTag }) => {
   const [showSettings, setShowSettings] = useState(false);
 
   return (
     <div className={styles.container}>
       {showSettings && (
-        <TagSettings id={id} name={name} setShowSettings={setShowSettings} />
+        <TagSettings
+          tagId={tagId}
+          todoId={todoId}
+          name={name}
+          setShowSettings={setShowSettings}
+          destroyTag={destroyTag}
+          removeTag={removeTag}
+        />
       )}
-      <li onClick={() => setShowSettings(!showSettings)} className={styles.tag}>
+      <li
+        onMouseEnter={() => setShowSettings(!showSettings)}
+        className={styles.tag}
+      >
         {name}
       </li>
     </div>

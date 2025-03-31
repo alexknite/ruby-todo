@@ -78,10 +78,7 @@ export const add_tag = async (todo_id, tag_id) => {
 };
 
 export const remove_tag = async (todo_id, tag_id) => {
-  const res = await axios.delete(DELETE_REMOVE_TAG_URL, {
-    todo_id: todo_id,
-    tag_id: tag_id,
-  });
+  const res = await axios.delete(DELETE_REMOVE_TAG_URL(todo_id, tag_id));
   return res.data;
 };
 
