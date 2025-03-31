@@ -22,3 +22,25 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+*.gem
+*.rbc
+/backend/.config
+/backend/coverage/
+/backend/InstalledFiles
+/backend/pkg/
+/backend/spec/reports/
+/backend/spec/examples.txt
+/backend/test/tmp/
+/backend/test/version_tmp/
+/backend/tmp/
+
+/backend/.yardoc/
+/backend/_yardoc/
+/backend/doc/
+/backend/rdoc/
+
+## Environment normalization:
+/backend/.bundle/
+/backend/vendor/bundle
+/backend/lib/bundler/man/
